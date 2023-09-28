@@ -1,52 +1,42 @@
-let list=['Rock','Paper','Scissors']
+    let playerScore = 0;
+    let computerScore = 0;
 
-function getComputerChoice()
-{
-   let  itemIndex=Math.floor(Math.random()*3);
-   console.log(itemIndex);
-   return list[itemIndex];
+        function computerChoice() {
+            const choices = ['rock', 'paper', 'scissors'];
+            const randomIndex = Math.floor(Math.random() * choices.length);
+            return choices[randomIndex];
+        }
 
-}
+        function updateResults() {
+            const resultsElement = document.getElementById('results');
+            resultsElement.innerHTML = `Player: ${playerScore} - Computer: ${computerScore}`;
 
-function playRound(playerAns,computerAns)
-{
-    if(playerAns==computerAns)
-    {
-        return "It's a Tie"
-    }
-    if(playerAns=='Rock' && computerAns=='Scissors')
-    {
-        return "You win";
-    }
-    if(playerAns=='Rock' && computerAns=='Paper')
-    {
-        return "You Lose";
-    }
-    if(playerAns=='Scissors' && computerAns=='Rock')
-    {
-        return "You Lose";
-    }
-    if(playerAns=='Scissors'&& computerAns=='Paper')
-    {
-        return "You win";
-    }
-    if(playerAns=='Paper'&& computerAns=='Rock')
-    {
-        return "You win";
-    }
-    if(playerAns=='Paper' && computerAns=='Scissors')
-    {
-        return "You Lose";
-    }
-    
-}
+            if (playerScore === 5) {
+                resultsElement.innerHTML += '<br>Player wins!';
+            } else if (computerScore === 5) {
+                resultsElement.innerHTML += '<br>Computer wins!';
+            }
+        }
 
+        function play(playerChoice) {
+            const computerChoiceResult = computerChoice();
 
-const computerAns=getComputerChoice();
-const playerAns=prompt("Select your move");
+            if (
+                (playerChoice === 'rock' && computerChoiceResult === 'scissors') ||
+                (playerChoice === 'paper' && computerChoiceResult === 'rock') ||
+                (playerChoice === 'scissors' && computerChoiceResult === 'paper')
+            )
+            {
+                playerScore++;
+            } 
+            else if (
+                (computerChoiceResult === 'rock' && playerChoice === 'scissors') ||
+                (computerChoiceResult === 'paper' && playerChoice === 'rock') ||
+                (computerChoiceResult === 'scissors' && playerChoice === 'paper')
+            ) 
+            {
+                computerScore++;
+            }
 
-
-
-console.log(playRound(playerAns,computerAns));
-
-
+            updateResults();
+        }
